@@ -1,5 +1,11 @@
 language: python
 
+services:
+  - docker
+
+before_install:
+  - docker build -t jeixav/rmnlib .
+
 before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
 
 script: pytest
