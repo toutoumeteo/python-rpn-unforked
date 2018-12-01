@@ -7,6 +7,7 @@ before_install:
   - docker build -t jeixav/rmnlib .
 
 before_script:
+  - export LD_LIBRARY_PATH=$(pwd)/ssm-domains-base/lib/rmnlib_016.3_linux26-x86-64/lib/Linux_x86-64/gfortran
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
 
