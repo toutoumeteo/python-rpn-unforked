@@ -1,3 +1,5 @@
 language: python
 
+before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
+
 script: pytest
