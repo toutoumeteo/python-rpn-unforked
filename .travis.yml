@@ -6,6 +6,8 @@ services:
 before_install:
   - docker build -t jeixav/rmnlib .
 
-before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
+before_script:
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
+  - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
 
 script: pytest
