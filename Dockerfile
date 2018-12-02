@@ -18,7 +18,7 @@ USER ssm
 WORKDIR /home/ssm
 RUN git clone https://github.com/mfvalin/rmnlib-install.git 
 WORKDIR /home/ssm/rmnlib-install
-RUN git fetch && git checkout 7abaa4ea96713c99d6eb140136fa6bccf423caf8
+RUN git fetch && git checkout 3dc8268e28fd22048fc3b9b98552caf9aa70db29
 RUN make auto-install
 
 # Set up the environment to load at login time.
