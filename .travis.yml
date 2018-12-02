@@ -9,7 +9,6 @@ before_install:
 before_script:
   - export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
-
-script:
   - . /home/ssm/.profile_armnlib
-  - pytest
+
+script: pytest
