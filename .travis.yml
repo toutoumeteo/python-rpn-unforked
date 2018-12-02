@@ -11,5 +11,5 @@ before_script:
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
 
 script:
-  - . .profile_armnlib
+  - . ${HOME}/.profile_armnlib
   - pytest
