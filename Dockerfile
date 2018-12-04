@@ -21,8 +21,15 @@ WORKDIR /home/ssm/rmnlib-install
 RUN git fetch && git checkout 3dc8268e28fd22048fc3b9b98552caf9aa70db29
 RUN make auto-install
 
-# Set up the environment to load at login time.
 WORKDIR /home/ssm
-RUN echo . /home/ssm/ssm-domains-base/ssm_10.151/etc/ssm.d/profile >> .profile
-RUN echo . env-setup.dot >> .profile
-RUN echo . r.load.dot /home/ssm/ssm-domains-base/lib >> .profile
+
+# Extra packages needed for python-rpn tests
+USER root
+RUN apt-get update
+RUN apt-get install -y python-pytest python-numpy python-tz python-scipy
+
+# Copy the python-rpn source into the docker image
+COPY . /home/ssm/python-rpn
+RUN chown ssm.ssm -R /home/ssm/python-rpn
+
+USER ssm

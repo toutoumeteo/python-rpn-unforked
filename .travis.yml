@@ -3,12 +3,8 @@ language: python
 services:
   - docker
 
-before_install:
+before_script:
+  - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
   - docker build -t jeixav/rmnlib .
 
-before_script:
-  - export PYTHONPATH=$PYTHONPATH:$(pwd)/lib
-  - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
-  - . /home/ssm/.profile_armnlib
-
-script: pytest
+script: docker run --rm -t jeixav/rmnlib bash -c '. .profile_armnlib; cd python-rpn; env LD_LIBRARY_PATH=/home/ssm/ssm-domains-base/lib/linux26-x86-64/lib/Linux_x86-64/gfortran PYTHONPATH=$PWD/lib:$PYTHONPATH python -m pytest'
