@@ -1463,18 +1463,22 @@ librmn.c_wkoffit.argtypes = (_ct.c_char_p, _ct.c_int)
 librmn.c_wkoffit.restype  = _ct.c_int
 c_wkoffit = librmn.c_wkoffit
 
-librmn.crc32.argtypes = (
-    _ct.c_uint,
-    _npc.ndpointer(dtype=_np.uint32),
-    _ct.c_uint
-    )
-## librmn.crc32.argtypes = (
-##     _ct.c_int,
-##     _npc.ndpointer(dtype=_np.uint32),
-##     _ct.c_int
-##     )
-librmn.crc32.restype  = _ct.c_uint
-c_crc32 = librmn.crc32
+try:
+    librmn.crc32.argtypes = (
+        _ct.c_uint,
+        _npc.ndpointer(dtype=_np.uint32),
+        _ct.c_uint
+        )
+    ## librmn.crc32.argtypes = (
+    ##     _ct.c_int,
+    ##     _npc.ndpointer(dtype=_np.uint32),
+    ##     _ct.c_int
+    ##     )
+    librmn.crc32.restype  = _ct.c_uint
+    c_crc32 = librmn.crc32
+except AttributeError:
+    # crc32 no longer a public symbol as of librmn 016.3.
+    pass
 
 #--- base -----------------------------------------------------------
 
