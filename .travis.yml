@@ -7,4 +7,4 @@ before_script:
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
   - docker build -t jeixav/rmnlib .
 
-script: docker run --rm -t jeixav/rmnlib bash -c '. .profile_armnlib; cd python-rpn; env LD_LIBRARY_PATH=/home/ssm/ssm-domains-base/lib/linux26-x86-64/lib/Linux_x86-64/gfortran PYTHONPATH=$PWD/lib:$PYTHONPATH python -m pytest'
+script: docker run --rm -t jeixav/rmnlib bash -c '. .profile_armnlib; cd python-rpn; env LD_LIBRARY_PATH=/home/ssm/ssm-domains-base/lib/linux26-x86-64/lib/Linux_x86-64/gfortran:/home/ssm/ssm-domains-base/lib/vgrid_6.4_linux26-x86-64/source PYTHONPATH=$PWD/lib:$PYTHONPATH python -m pytest'

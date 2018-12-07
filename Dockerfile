@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 LABEL upstream-source="https://github.com/mfvalin/rmnlib-install"
 LABEL source="https://github.com/neishm/rmnlib-install-docker"
@@ -18,8 +18,8 @@ USER ssm
 WORKDIR /home/ssm
 RUN git clone https://github.com/mfvalin/rmnlib-install.git 
 WORKDIR /home/ssm/rmnlib-install
-RUN git fetch && git checkout 3dc8268e28fd22048fc3b9b98552caf9aa70db29
-RUN make auto-install
+RUN git fetch && git checkout 8f59c0452521dbb887a6c28aef413288bfdccc2b
+RUN env VGRID_RELEASE=6.4 make auto-install
 
 WORKDIR /home/ssm
 
