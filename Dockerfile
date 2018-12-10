@@ -19,8 +19,16 @@ WORKDIR /home/ssm
 RUN git clone https://github.com/mfvalin/rmnlib-install.git 
 WORKDIR /home/ssm/rmnlib-install
 RUN git fetch && git checkout 8f59c0452521dbb887a6c28aef413288bfdccc2b
-RUN env VGRID_RELEASE=6.4 make auto-install
 
+# Patch up vgrid 6.4 to fully build the ssm package.
+RUN grep -A5 updlib: vgrid_6.1.gnu_linux26-x86-64/source/Makefile >> vgrid_6.4_linux26-x86-64/source/Makefile
+RUN sed -i 's/make shared/make updlib/' vgrid_6.4_linux26-x86-64/bin/install_vgrid.sh
+
+RUN make auto-install VGRID_RELEASE=6.4
+
+# Auto-load profile for interactive sessions.
+RUN echo . $HOME/.profile_armnlib >> $HOME/.bashrc
+RUN echo . r.load.dot dev/gfortran >> $HOME/.bashrc
 WORKDIR /home/ssm
 
 # Extra packages needed for python-rpn tests
