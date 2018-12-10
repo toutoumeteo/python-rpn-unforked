@@ -24,6 +24,11 @@ RUN git fetch && git checkout 8f59c0452521dbb887a6c28aef413288bfdccc2b
 RUN grep -A5 updlib: vgrid_6.1.gnu_linux26-x86-64/source/Makefile >> vgrid_6.4_linux26-x86-64/source/Makefile
 RUN sed -i 's/make shared/make updlib/' vgrid_6.4_linux26-x86-64/bin/install_vgrid.sh
 
+# Add gem-data as a package to install.
+# Copy and adapt the lines in the Makefile from the 'afsisio' package.
+RUN sed -i '/afsisio.* \\$/{p;s/afsisio_1.0u/gem-data_4.2.0/}' Makefile
+RUN sed -i '/afsisio.*:/,/^$/H;${p;s/.*//;x;s/afsisio_1.0u/gem-data_4.2.0/g}' Makefile
+
 RUN make auto-install VGRID_RELEASE=6.4
 
 # Auto-load profile for interactive sessions.
