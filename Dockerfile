@@ -16,13 +16,9 @@ USER ssm
 
 # Use rmnlib-install to build the core packages.
 WORKDIR /home/ssm
-RUN git clone https://github.com/mfvalin/rmnlib-install.git 
+RUN git clone https://github.com/jeixav/rmnlib-install.git 
 WORKDIR /home/ssm/rmnlib-install
-RUN git fetch && git checkout 8f59c0452521dbb887a6c28aef413288bfdccc2b
-
-# Patch up vgrid 6.4 to fully build the ssm package.
-RUN grep -A5 updlib: vgrid_6.1.gnu_linux26-x86-64/source/Makefile >> vgrid_6.4_linux26-x86-64/source/Makefile
-RUN sed -i 's/make shared/make updlib/' vgrid_6.4_linux26-x86-64/bin/install_vgrid.sh
+RUN git fetch && git checkout 92f256dae42c27ba37ea1f91dbbac97b079728d9
 
 # Add gem-data as a package to install.
 # Copy and adapt the lines in the Makefile from the 'afsisio' package.
