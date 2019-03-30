@@ -24,10 +24,10 @@ class UnitTest_fst_edit_dir(unittest.TestCase):
         return recmeta['datev'],recmeta['dateo'],recmeta['deet'],recmeta['npas']
 
     def copy_file(self):
-        ATM_MODEL_DFILES = os.getenv('ATM_MODEL_DFILES')
+        ATM_MODEL_DFILES = os.environ['ATM_MODEL_DFILES']
         ref_file = os.path.join(ATM_MODEL_DFILES.strip(),'bcmk/2009042700_012')
         
-        TMPDIR = os.getenv('TMPDIR')
+        TMPDIR = os.environ['TMPDIR']
         new_file = os.path.join(TMPDIR.strip(),'new.fst')
         
         copy(ref_file, new_file)

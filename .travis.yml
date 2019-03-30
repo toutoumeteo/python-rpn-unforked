@@ -5,6 +5,6 @@ services:
 
 before_script:
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
-  - docker build -t jeixav/rmnlib .
+  - docker build --tag jeixav/rmnlib .
 
-script: docker run --rm -t jeixav/rmnlib bash -i -c 'cd python-rpn; env PYTHONPATH=$PWD/lib:$PYTHONPATH rpnpy=$PWD python -m pytest'
+script: docker run --rm --tty jeixav/rmnlib bash -i -c 'cd python-rpn; env PYTHONPATH=$PWD/lib:$PYTHONPATH rpnpy=$PWD CMCGRIDF=$ATM_MODEL_DFILES/bcmk python -m pytest --maxfail=2'

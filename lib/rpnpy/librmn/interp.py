@@ -50,7 +50,7 @@ _ftn   = lambda x, t: x if _isftnf32(x) else _np.asfortranarray(x, dtype=t)
 _isftnf32 = lambda x: _isftn(x, _np.float32)
 _ftnf32   = lambda x: _ftn(x, _np.float32)
 _ftnOrEmpty = lambda x, s, t: \
-    _np.empty(s, dtype=t, order='FORTRAN') if x is None else _ftn(x, t)
+    _np.empty(s, dtype=t, order='F') if x is None else _ftn(x, t)
 _list2ftnf32 = lambda x: \
     x if isinstance(x, _np.ndarray) \
       else _np.asfortranarray(x, dtype=_np.float32)
@@ -616,7 +616,7 @@ def ezget_subgridids(super_gdid):
     """
     super_gdid = _getCheckArg(int, super_gdid, super_gdid, 'id')
     nsubgrids  = ezget_nsubgrids(super_gdid)
-    cgridlist  = _np.empty(nsubgrids, dtype=_np.intc, order='FORTRAN')
+    cgridlist  = _np.empty(nsubgrids, dtype=_np.intc, order='F')
     istat = _rp.c_ezget_subgridids(super_gdid, cgridlist)
     if istat >= 0:
         return cgridlist.tolist()
@@ -1140,8 +1140,8 @@ def gdxyfll(gdid, lat=None, lon=None):
                         format(type(clat), type(clon)))
     if clat.size != clon.size:
         raise TypeError("gdxyfll: provided lat, lon should have the same size")
-    cx = _np.empty(clat.shape, dtype=_np.float32, order='FORTRAN')
-    cy = _np.empty(clat.shape, dtype=_np.float32, order='FORTRAN')
+    cx = _np.empty(clat.shape, dtype=_np.float32, order='F')
+    cy = _np.empty(clat.shape, dtype=_np.float32, order='F')
     istat = _rp.c_gdxyfll(gdid, cx, cy, clat, clon, clat.size)
     if istat >= 0:
         return {
@@ -1213,8 +1213,8 @@ def gdllfxy(gdid, xpts=None, ypts=None):
     if cx.size != cy.size:
         raise TypeError(
             "gdllfxy: provided xpts, ypts should have the same size")
-    clat = _np.empty(cx.shape, dtype=_np.float32, order='FORTRAN')
-    clon = _np.empty(cx.shape, dtype=_np.float32, order='FORTRAN')
+    clat = _np.empty(cx.shape, dtype=_np.float32, order='F')
+    clon = _np.empty(cx.shape, dtype=_np.float32, order='F')
     istat = _rp.c_gdllfxy(gdid, clat, clon, cx, cy, cx.size)
     if istat >= 0:
         return {

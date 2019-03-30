@@ -6,8 +6,8 @@
 # Copyright: LGPL 2.1
 
 #TODO: add ax, ax optional arg to dE, dL, U
-#TODO: add fucntions to convert between Z, # and Y grids
-#TODO: add fucntions to define YE grids
+#TODO: add functions to convert between Z, # and Y grids
+#TODO: add functions to define YE grids
 
 """
 Librmn Fstd grid helper functions
@@ -1210,9 +1210,9 @@ def defGrid_ZEr(ni, nj=None, rlat0=None, rlon0=None, dlat=None, dlon=None,
         params[k] = v
 
     params['ax'] = _np.empty((params['ni'], 1), dtype=_np.float32,
-                             order='FORTRAN')
+                             order='F')
     params['ay'] = _np.empty((1, params['nj']), dtype=_np.float32,
-                             order='FORTRAN')
+                             order='F')
     for i in range(params['ni']):
         params['ax'][i, 0] = params['rlon0'] + float(i)*params['dlon']
     for j in range(params['nj']):
@@ -1640,9 +1640,9 @@ def defGrid_ZL(ni, nj=None, lat0=None, lon0=None, dlat=None, dlon=None,
         params[k] = v
     #TODO: adjust lat0,lon0 to avoid out or range?
     params['ax'] = _np.empty((params['ni'], 1), dtype=_np.float32,
-                             order='FORTRAN')
+                             order='F')
     params['ay'] = _np.empty((1, params['nj']), dtype=_np.float32,
-                             order='FORTRAN')
+                             order='F')
     for i in range(params['ni']):
         params['ax'][i, 0] = params['lon0'] + float(i)*params['dlon']
     for j in range(params['nj']):

@@ -1481,7 +1481,7 @@ def fstluk(key, dtype=None, rank=None, dataArray=None):
     myshape[0:maxrank] = params['shape'][0:maxrank]
     params['shape'] = myshape
     if dataArray is None:
-        data = _np.empty(params['shape'], dtype=dtype, order='FORTRAN')
+        data = _np.empty(params['shape'], dtype=dtype, order='F')
     elif isinstance(dataArray, _np.ndarray):
         if not dataArray.flags['F_CONTIGUOUS']:
             raise TypeError('Provided dataArray should be F_CONTIGUOUS')
