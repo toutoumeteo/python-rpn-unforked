@@ -1,0 +1,11 @@
+#!/bin/bash
+
+. $HOME/.profile_armnlib
+. r.load.dot dev/gfortran
+
+export PYTHONPATH=$PWD/lib:$PYTHONPATH
+export rpnpy=$PWD
+export CMCGRIDF=$ATM_MODEL_DFILES/bcmk
+
+python -m pytest --maxfail=2
+

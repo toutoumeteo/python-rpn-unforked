@@ -1,10 +1,28 @@
-language: python
+dist: xenial
 
-services:
-  - docker
+# ssm-installer requires python 2.7
+language: python
+python: 2.7
 
 before_script:
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
-  - docker build --tag jeixav/rmnlib .
+  # Install dependencies for rmnlib-install
+  - sudo apt-get install -y git make libssl-dev ksh gfortran libopenmpi-dev python liburi-perl wget libncurses5-dev libc6-dev-i386 openmpi-bin rsync
+  # Get latest version of rmnlib-install.
+  - git clone https://github.com/mfvalin/rmnlib-install.git
+  # Use CMC SSM depot.
+  - sed -i 's/wget/\0 --progress=dot:giga /' rmnlib-install/Makefile
+  - sed -i 's@\(^WEB_HOME *=\).*@\1 http://collaboration.cmc.ec.gc.ca/science/ssm/@' rmnlib-install/default-install.cfg
+  # Install gem-data as part of rmnlib-install.
+  - sed -i '/afsisio.* \\$/{p;s/afsisio_1.0u/gem-data_4.2.0/}' rmnlib-install/Makefile
+  - sed -i '/afsisio.*:/,/^$/H;${p;s/.*//;x;s/afsisio_1.0u/gem-data_4.2.0/g}' rmnlib-install/Makefile
+  # Specify the user for ssm-installer.
+  - sed -i 's/\(^[ \t]*\)--label/\1--userName "\$(id -u)" --groupName "\$(id -g)" \\\n\1--label/' rmnlib-install/Makefile
+  # Build the environment.
+  - cd rmnlib-install && make auto-install VGRID_RELEASE=6.4
+  # Install pytest.
+  - sudo apt-get install -y python-pytest
+  # Install dependencies for rpnpy (installed via pip into virtualenv).
+  - pip install numpy pytz scipy
 
-script: docker run --rm --tty jeixav/rmnlib bash -i -c 'cd python-rpn; env PYTHONPATH=$PWD/lib:$PYTHONPATH rpnpy=$PWD CMCGRIDF=$ATM_MODEL_DFILES/bcmk python -m pytest --maxfail=2'
+script: cd $TRAVIS_BUILD_DIR && ./ci-tests
