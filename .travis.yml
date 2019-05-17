@@ -7,12 +7,12 @@ python: 2.7
 before_script:
   - printf "__VERSION__ = '2.0.4'\\n" >$(pwd)/lib/rpnpy/version.py
   # Install dependencies for rmnlib-install
-  - sudo apt-get install -y git make libssl-dev ksh gfortran libopenmpi-dev python liburi-perl wget libncurses5-dev libc6-dev-i386 openmpi-bin rsync
+  - sudo apt-get install -y git make libssl-dev ksh gfortran libopenmpi-dev python liburi-perl curl libncurses5-dev libc6-dev-i386 openmpi-bin rsync
   # Get latest version of rmnlib-install.
   - git clone https://github.com/mfvalin/rmnlib-install.git
-  # Use CMC SSM depot.
-  - sed -i 's/wget/\0 --progress=dot:giga /' rmnlib-install/Makefile
-  - sed -i 's@\(^WEB_HOME *=\).*@\1 http://collaboration.cmc.ec.gc.ca/science/ssm/@' rmnlib-install/default-install.cfg
+  # Use local git-lfs files.
+  - sed -i 's/wget/curl -O/' rmnlib-install/Makefile
+  - sed -i 's@\(^WEB_HOME *=\).*@\1 file://'"$TRAVIS_BUILD_DIR"'/local-ssm-files/@' rmnlib-install/default-install.cfg
   # Install gem-data as part of rmnlib-install.
   - sed -i '/afsisio.* \\$/{p;s/afsisio_1.0u/gem-data_4.2.0/}' rmnlib-install/Makefile
   - sed -i '/afsisio.*:/,/^$/H;${p;s/.*//;x;s/afsisio_1.0u/gem-data_4.2.0/g}' rmnlib-install/Makefile
