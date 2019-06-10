@@ -20,5 +20,8 @@ before_script:
   - sed -i 's/\(^[ \t]*\)--label/\1--userName "\$(id -u)" --groupName "\$(id -g)" \\\n\1--label/' rmnlib-install/Makefile
   # Build the environment.
   - cd rmnlib-install && make auto-install VGRID_RELEASE=6.4
+  # Clone specific vgrid  version
+  - cd
+  - git clone https://gitlab.com/toutoumeteo/vgrid.git
 
 script: cd $TRAVIS_BUILD_DIR && ./ci-tests
