@@ -10,7 +10,11 @@ export CMCGRIDF=$ATM_MODEL_DFILES/bcmk
 #python -m pytest --maxfail=2
 set -x
 cd
-find . -name vgrid.c
-
-
-
+#find . -name vgrid.c
+git clone https://gitlab.com/toutoumeteo/vgrid.git
+cd vgrid
+git checkout -b 6.4.b2_CI origin/6.4.b2_CI
+cd src
+make
+cd ../tests
+make tests
