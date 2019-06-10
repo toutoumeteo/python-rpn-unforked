@@ -7,5 +7,10 @@ export PYTHONPATH=$PWD/lib:$PYTHONPATH
 export rpnpy=$PWD
 export CMCGRIDF=$ATM_MODEL_DFILES/bcmk
 
-python -m pytest --maxfail=2
+#python -m pytest --maxfail=2
+set -x
+cd
+find . -name vgrid.c
+
+
 

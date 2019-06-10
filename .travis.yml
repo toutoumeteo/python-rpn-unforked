@@ -20,9 +20,5 @@ before_script:
   - sed -i 's/\(^[ \t]*\)--label/\1--userName "\$(id -u)" --groupName "\$(id -g)" \\\n\1--label/' rmnlib-install/Makefile
   # Build the environment.
   - cd rmnlib-install && make auto-install VGRID_RELEASE=6.4
-  # Install pytest.
-  - sudo apt-get install -y python-pytest
-  # Install dependencies for rpnpy (installed via pip into virtualenv).
-  - pip install numpy pytz scipy
 
 script: cd $TRAVIS_BUILD_DIR && ./ci-tests
